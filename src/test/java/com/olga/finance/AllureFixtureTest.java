@@ -1,4 +1,4 @@
-package io.qameta.allure.examples.junit4;
+package com.olga.finance;
 
 import org.junit.*;
 
