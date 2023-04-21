@@ -11,35 +11,35 @@ public class Project {
     }
 
     public String getProjectId() {
-        return element.findElement(By.xpath(".//td[0]")).getText();
-    }
-
-    public String getProjectName() {
         return element.findElement(By.xpath(".//td[1]")).getText();
     }
 
-    public String getClient() {
+    public String getProjectName() {
         return element.findElement(By.xpath(".//td[2]")).getText();
     }
 
-    public String getStartDate() {
+    public String getClient() {
         return element.findElement(By.xpath(".//td[3]")).getText();
     }
 
-    public String getEndDate() {
+    public String getStartDate() {
         return element.findElement(By.xpath(".//td[4]")).getText();
     }
 
-    public String getManager() {
+    public String getEndDate() {
         return element.findElement(By.xpath(".//td[5]")).getText();
     }
 
-    public String getContractStatus() {
+    public String getManager() {
         return element.findElement(By.xpath(".//td[6]")).getText();
     }
 
+    public String getContractStatus() {
+        return element.findElement(By.xpath(".//td[7]")).getText();
+    }
+
     public String getcolumn(int i) throws IllegalArgumentException {
-        if(i >= 0 && i <7){
+        if(i >= 1 && i <8){
             return element.findElement(By.xpath(".//td["+i+"]")).getText();
         } else {
             throw new IllegalArgumentException("Wrong column number");

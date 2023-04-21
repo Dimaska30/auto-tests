@@ -10,24 +10,23 @@ import java.util.List;
 
 public class AddProjectMenu {
     private WebDriver driver;
-    private ProjectPage parent;
 
-    public AddProjectMenu(WebDriver driver, ProjectPage parent){
+    public AddProjectMenu(WebDriver driver){
         this.driver=driver;
-        this.parent=parent;
     }
 
-    private By title = By.xpath("");
+    private By title = By.xpath("//div[@role=\"presentation\"]/div[3]/div/div/div/div[1]/div");
 
-    private By projectName_field = By.xpath("");
+    private By projectName_field = By.xpath("//div[@role=\"presentation\"]/div[3]/div/div/div/div[2]/div[2]/div/div/input");
 
-    private By Client_field  = By.xpath("");
-    private By Client_field_values = By.xpath("#menu- > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiPaper-root.MuiMenu-paper.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.css-177ic5c > ul > li");
+    private By Client_field  = By.xpath("//div[@id=\"standard-basic\"]");
+
+    private By Client_field_values = By.xpath("//ul[@role=\"listbox\"]/li");
     
-    private By color_label_field = By.xpath("");
-    private By color_label_field_values = By.xpath("");
+    private By color_label_field = By.xpath("//div[@role=\"presentation\"]/div[3]/div/div/div/div[4]/div[2]/div/div");
+    private By color_label_field_values = By.xpath("//ul[@role=\"listbox\"]/li");
 
-    private By save_button = By.xpath("");
+    private By save_button = By.cssSelector("button.AddProjectModal_save__Qm4oD");
 
     public String getTitle(){
         return driver.findElement(title).getText();
@@ -45,6 +44,7 @@ public class AddProjectMenu {
         for (int i=0; i<clients.size(); i++){
             if(clients.get(i).getText().equals(client)){
                 index = i;
+                break;
             }
         }
         clients.get(index).click();
@@ -58,6 +58,7 @@ public class AddProjectMenu {
         for(int i=0; i<colors.size(); i++) {
             if(colors.get(i).getText().equals(color)){
                 index = i;
+                break;
             }
         }
         colors.get(index).click();
@@ -65,7 +66,8 @@ public class AddProjectMenu {
     }
 
     public ProjectPage clickSave(){
+        driver.findElement(title).click();
         driver.findElement(save_button).click();
-        return parent;
+        return new ProjectPage(driver);
     }
 }

@@ -17,14 +17,14 @@ public class ProjectPage {
     public ProjectPage(WebDriver driver){
         this.driver=driver;
     }
-    private By tableRows = By.xpath("table/tbody/tr");
+    private By tableRows = By.xpath("//table/tbody/tr");
 
     private By addProjectButton = By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/button");
 
     public List<Project> getProjects(){
         List<WebElement> rows = driver.findElements(tableRows);
         List<Project> projects = new ArrayList<>();
-        for (int i=1;i<rows.size();i++){
+        for (int i=0;i<rows.size();i++){
             projects.add(new Project(rows.get(i)));
         }
         return projects;
@@ -41,6 +41,6 @@ public class ProjectPage {
 
     public AddProjectMenu addProjectButtonClick() {
         driver.findElement(addProjectButton).click();
-        return new AddProjectMenu(driver, this);
+        return new AddProjectMenu(driver);
     }
 }
