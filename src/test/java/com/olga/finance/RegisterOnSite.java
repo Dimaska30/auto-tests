@@ -7,14 +7,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import com.olga.finance.pages.LoginPage;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class RegisterOnSite {
-    static MainPage registrationOnSite(String email, String password, boolean isArina){
-        if(isArina)
-            System.setProperty("webdriver.chromdriver", pathDima);
-        else
-            System.setProperty("webdriver.chromdriver", pathArina);
+    static MainPage registrationOnSite(String email, String password){
+        System.setProperty("webdriver.chromdriver", path);
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         WebDriver driver = new ChromeDriver(options);
@@ -28,7 +27,5 @@ public class RegisterOnSite {
 
         return page_2;
     }
-
-    private static String pathDima = "";
-    private static String pathArina = "D:\\tpo\\chromedriver.exe";
+    private static String path = ".\\driver\\chromedriver.exe";
 }

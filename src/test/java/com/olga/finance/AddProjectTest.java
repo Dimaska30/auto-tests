@@ -17,7 +17,7 @@ public class AddProjectTest {
     static private ProjectPage projectPage;
     @BeforeClass
     public static void beforeClass() {
-        mainPage = RegisterOnSite.registrationOnSite("admin@gmail.com","olga_finance",true);
+        mainPage = RegisterOnSite.registrationOnSite("admin@gmail.com","olga_finance");
         step("Мы зашли на сайт! :)");
     }
 
