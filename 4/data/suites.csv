@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sun Apr 23 21:39:45 GMT 2023","Sun Apr 23 21:39:49 GMT 2023","3440","","com.olga.finance.AddProjectTest","","com.olga.finance.AddProjectTest","addProjectTest","Добавление проекта в систему","Проверка на создание проектов в системе."
+"passed","Sun Apr 23 21:39:49 GMT 2023","Sun Apr 23 21:39:49 GMT 2023","0","","com.olga.finance.AllureSimpleTest","","com.olga.finance.AllureSimpleTest","allureFakeParameterizedTest","allureFakeParameterizedTest",""
+"passed","Sun Apr 23 21:39:49 GMT 2023","Sun Apr 23 21:39:49 GMT 2023","6","","com.olga.finance.AllureSimpleTest","","com.olga.finance.AllureSimpleTest","allureSimpleTest","allureSimpleTest displayName",""
