@@ -16,6 +16,10 @@ public class RegisterOnSite {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless");
+
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
         driver.get("https://olga-finance.effective.band/");
