@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RegisterOnSite {
     static MainPage registrationOnSite(String email, String password){
-        System.setProperty("webdriver.chromdriver", path);
+        //System.setProperty("webdriver.chromdriver", path);
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
