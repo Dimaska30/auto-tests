@@ -1,0 +1,1 @@
+[{"uid":"74842f55e8da2bfb","name":"allureFakeParameterizedTest","time":{"start":1682268636742,"stop":1682268636747,"duration":5},"status":"passed","severity":"normal"},{"uid":"83aa6349a90c1e0c","name":"allureSimpleTest displayName","time":{"start":1682268636879,"stop":1682268636905,"duration":26},"status":"passed","severity":"normal"}]
