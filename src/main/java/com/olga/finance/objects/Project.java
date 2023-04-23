@@ -38,6 +38,10 @@ public class Project {
         return element.findElement(By.xpath(".//td[7]")).getText();
     }
 
+    public String getColor() {
+        return element.findElement(By.xpath(".//td[2]")).getCssValue("color");
+    }
+
     public String getcolumn(int i) throws IllegalArgumentException {
         if(i >= 1 && i <8){
             return element.findElement(By.xpath(".//td["+i+"]")).getText();

@@ -23,4 +23,8 @@ public class MainPage {
         driver.findElement(teamButtons).click();
         return new TeamPage(driver);
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 }

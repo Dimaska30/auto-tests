@@ -62,6 +62,7 @@ public class AddProjectMenu {
             }
         }
         colors.get(index).click();
+        driver.findElement(title).click();
         return true;
     }
 
