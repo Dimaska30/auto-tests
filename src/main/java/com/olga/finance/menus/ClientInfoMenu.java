@@ -9,17 +9,16 @@ import com.olga.finance.pages.TeamPage;
 
 public class ClientInfoMenu {
     private WebDriver driver;
-    private TeamPage parent;
 
-    public ClientInfoMenu(WebDriver driver, TeamPage parent){
+
+    public ClientInfoMenu(WebDriver driver){
         this.driver=driver;
-        this.parent=parent;
     }
 
     private By title = By.className(".AdminEditProfileModal_titleFont__oRnJC");
     private By editButton = By.xpath("/html/body/div[2]/div[3]/div/div/div[1]/div[3]/button");
     private By expertise_field = By.xpath("/html/body/div[2]/div[3]/div/div/div[2]/div/div[2]/div[4]/div[2]/div/div/select"); 
-    private By saveButton = By.xpath("");
+    private By saveButton = By.xpath("/html/body/div[2]/div[3]/div/div/div[3]/button[2]");
 
     public String getTitle(){
         return driver.findElement(title).getText();
@@ -37,7 +36,7 @@ public class ClientInfoMenu {
 
     public TeamPage clickSave(){
         driver.findElement(saveButton).click();
-        return parent;
+        return new TeamPage(driver);
     }
 
     private boolean selectSelectField(By path, String value){

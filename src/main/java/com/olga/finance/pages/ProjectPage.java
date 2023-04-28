@@ -21,6 +21,7 @@ public class ProjectPage {
 
     private By addProjectButton = By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/button");
 
+    private By countLabel = By.className("MuiTablePagination-displayedRows");
     public List<Project> getProjects(){
         List<WebElement> rows = driver.findElements(tableRows);
         List<Project> projects = new ArrayList<>();
@@ -42,5 +43,12 @@ public class ProjectPage {
     public AddProjectMenu addProjectButtonClick() {
         driver.findElement(addProjectButton).click();
         return new AddProjectMenu(driver);
+    }
+
+    public int getAllProject_count() {
+        String temp = driver.findElement(countLabel).getText();
+        String[] temp1 = temp.split(" of ");
+        int result = Integer.parseInt(temp1[1]);
+        return result;
     }
 }

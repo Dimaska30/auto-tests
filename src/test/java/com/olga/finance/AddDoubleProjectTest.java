@@ -14,33 +14,33 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 
+import io.qameta.allure.model.Status;
 import org.junit.*;
 import static io.qameta.allure.Allure.parameter;
 import org.junit.Test;
+import org.openqa.selenium.NoSuchContextException;
 import org.openqa.selenium.TakesScreenshot;
 
+import static io.qameta.allure.Allure.step;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 @Epic("Страница 'Projects'")
-@Feature("Добавление проекта")
-public class AddProjectTest {
+@Feature("Проверка дублирования проекта")
+public class AddDoubleProjectTest {
 
     static private MainPage mainPage;
     static private ProjectPage projectPage;
     static private AddProjectMenu menu;
 
-    static private String ADMIN_LOGIN = "admin@gmail.com";
+   static private String ADMIN_LOGIN = "admin@gmail.com";
     static private String ADMIN_PASSWORD = "olga_finance";
 
-    static private String PROJECT_NAME = "111_testproject";
+    static private String PROJECT_NAME = "";
     static private String CLIENT = "OOO \"Handsome\"";
     static private String COLOR = "Orange";
-    static private String COLOR_CODE = "rgba(243, 109, 37, 1)";
-    static private String START_DATE = "-";
-    static private String END_DATE = "-";
-    static private String MANAGER = "n/a";
-    static private String CONTRACT_STATUS = "n/a";
 
+    static private int COUNT_PROJECT = 0;
 
     @BeforeClass
     @Step("Авторизация на сайте.")
@@ -52,11 +52,16 @@ public class AddProjectTest {
     @Step("Переключение на страницу 'Projects'.")
     public void before() {
         projectPage = mainPage.clickProject();
+        if (projectPage.getProjects().size() == 0){
+            step("Проверили, что таблица Projects не пустая.",  Status.FAILED);
+            throw new NoSuchContextException("В таблице нет проектов!");
+        }
+        step("Проверили, что таблица Projects не пустая.");
     }
 
     
-    @DisplayName("Добавление проекта в систему")
-    @Description("Проверка на создание проектов в системе.")
+    @DisplayName("Дублирование проекта в систему")
+    @Description("Проверка на не создание дублей проектов в системе.")
     @Link(name="Ссылка на странницу", url="https://olga-finance.effective.band/projects")
     @Owner(value = "Красотина Арина")
     @Test
@@ -64,17 +69,13 @@ public class AddProjectTest {
         parameter("Login", ADMIN_LOGIN);
         parameter("Password", ADMIN_PASSWORD);
 
+        rememberFirstProject();
+
         clickToButtAddProject();
         enterData(PROJECT_NAME, CLIENT, COLOR);
         saveProject();
 
-        checkProject(PROJECT_NAME, 
-                     COLOR_CODE,
-                     CLIENT,
-                     START_DATE,
-                     END_DATE,
-                     MANAGER,
-                     CONTRACT_STATUS);
+        checkProject(PROJECT_NAME, COUNT_PROJECT);
     }
 
     @After
@@ -85,6 +86,12 @@ public class AddProjectTest {
 
     @AfterClass
     public static void afterClass() {
+    }
+
+    @Step("Запоминание первого проекта")
+    private void rememberFirstProject() {
+        PROJECT_NAME = projectPage.getProjects().get(0).getProjectName();
+        COUNT_PROJECT = projectPage.getAllProject_count();
     }
 
     @Step("Клик по кнопкой 'Add Project'.")
@@ -121,30 +128,31 @@ public class AddProjectTest {
         projectPage = menu.clickSave();
     }
 
-    @Step("Проверка, что проект создан.")
-    private void checkProject(String projectName,
-                              String color, 
-                              String client, 
-                              String startDate, 
-                              String endDate, 
-                              String manager, 
-                              String contractStatus) {
+    @Step("Проверка, что проект единственный.")
+    private void checkProject(String projectName, int n) {
 
         Project firstRow = projectPage.getProjects().get(0);
+        Project secondRow = projectPage.getProjects().get(1);
 
-        checkField("project name",projectName, firstRow.getProjectName());
-        checkField("color", color, firstRow.getColor());
-        checkField("client",client, firstRow.getClient());
-        checkField("start date",startDate, firstRow.getStartDate());
-        checkField("end date",endDate, firstRow.getEndDate());
-        checkField("manager",manager, firstRow.getManager());
-        checkField("contract status",contractStatus, firstRow.getContractStatus());
+        checkField("project name",1,projectName, firstRow.getProjectName());
+        not_checkField("project name",2,projectName, secondRow.getProjectName());
+        checkField("кол-ва проектов",n, projectPage.getAllProject_count());
+
         screenshot();
     }
 
-    @Step("Проверка поля {field}.")
-    private void checkField(String field, String expected, String  actual) {
+    @Step("Проверка {field}.")
+    private void checkField(String field, int expected, int  actual) {
         assertEquals(expected, actual);
+    }
+    @Step("Проверка поля {field} в строке {n} на соотвествие.")
+    private void checkField(String field,int n, String expected, String  actual) {
+        assertEquals(expected, actual);
+    }
+
+    @Step("Проверка поля {field} в строке {n} на несоответсвие.")
+    private void not_checkField(String field,int n, String expected, String  actual) {
+        assertNotSame(expected, actual);
     }
 
     @Attachment(value = "Вложение",type = "image/png", fileExtension = ".png")

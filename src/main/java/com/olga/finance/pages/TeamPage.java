@@ -1,5 +1,6 @@
 package com.olga.finance.pages;
 
+import com.olga.finance.menus.ClientInfoMenu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,8 +17,8 @@ public class TeamPage {
         this.driver = driver;
     }
 
-    private By filters = By.xpath("table/thead/tr/th");
-    private By tableRows = By.className("table/tbody/tr");
+    private By filters = By.xpath("//table/thead/tr/th");
+    private By tableRows = By.xpath("//table/tbody/tr");
 
     public boolean clickFilter(String name) {
         List<WebElement> columns_name = driver.findElements(filters);
@@ -33,16 +34,22 @@ public class TeamPage {
     public List<Human> getHumans() {
         List<WebElement> rows = driver.findElements(tableRows);
         List<Human> people = new ArrayList<>();
-        for (int i = 1; i < rows.size(); i++) {
+        for (int i = 0; i < rows.size(); i++) {
             people.add(new Human(rows.get(i)));
         }
         return people;
+    }
+
+    public ClientInfoMenu clickHuman(int n){
+        getHumans().get(n).click();
+        return new ClientInfoMenu(driver);
     }
 
     public List<String> getColumns(String name) {
         List<WebElement> elements = driver.findElements(filters);
         int index = -1;
         for (int i = 0; i < elements.size(); i++) {
+            String temp = elements.get(i).getText();
             if (elements.get(i).getText().equals(name)) {
                 index = i;
                 break;

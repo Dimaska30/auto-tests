@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 public class RegisterOnSite {
     static MainPage registrationOnSite(String email, String password){
-        //System.setProperty("webdriver.chromdriver", path);
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--no-sandbox");
@@ -22,7 +20,7 @@ public class RegisterOnSite {
         options.addArguments("start-maximized");
 
         WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.get("https://olga-finance.effective.band/");
         driver.manage().window().maximize();
         LoginPage page_1 = new LoginPage(driver);
@@ -33,5 +31,4 @@ public class RegisterOnSite {
 
         return page_2;
     }
-    private static String path = ".\\driver\\chromedriver.exe";
 }
