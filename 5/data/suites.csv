@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Apr 28 10:34:17 GMT 2023","Fri Apr 28 10:34:20 GMT 2023","3591","","com.olga.finance.ChangeTeamTest","","com.olga.finance.ChangeTeamTest","ChangeHumanTest","Изменения существующего клиента","Проверка изменения существующего Клиента."
+"passed","Fri Apr 28 10:34:08 GMT 2023","Fri Apr 28 10:34:13 GMT 2023","5827","","com.olga.finance.AddDoubleProjectTest","","com.olga.finance.AddDoubleProjectTest","addProjectTest","Дублирование проекта в систему","Проверка на не создание дублей проектов в системе."
