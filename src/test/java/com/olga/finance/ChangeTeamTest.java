@@ -23,7 +23,7 @@ public class ChangeTeamTest {
 
     static private String EXPERTIZE_FIELD_VALUE = "QA";
 
-    static private String EXPERTIZE_FILED_NAME = "Expertize";
+    static private String EXPERTIZE_FIELD_NAME = "Expertize";
 
     static private String expertizeFieldValueOld ="";
 
@@ -78,7 +78,7 @@ public class ChangeTeamTest {
 
     @Step("Нажатие на первую запись.")
     private static void clickFirstHuman(){
-        expertizeFieldValueOld = teamPage.getColumns(EXPERTIZE_FILED_NAME).get(0);
+        expertizeFieldValueOld = teamPage.getColumns(EXPERTIZE_FIELD_NAME).get(0);
         menu = teamPage.clickHuman(0);
     }
 
