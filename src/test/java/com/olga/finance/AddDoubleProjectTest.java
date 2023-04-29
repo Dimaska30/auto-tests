@@ -57,6 +57,7 @@ public class AddDoubleProjectTest {
             throw new NoSuchContextException("В таблице нет проектов!");
         }
         step("Проверили, что таблица Projects не пустая.");
+        projectPage.hideLeftPannel();
     }
 
     
@@ -68,6 +69,8 @@ public class AddDoubleProjectTest {
     public void addProjectTest() {
         parameter("Login", ADMIN_LOGIN);
         parameter("Password", ADMIN_PASSWORD);
+        parameter("Client", CLIENT);
+        parameter("Color", COLOR);
 
         rememberFirstProject();
 
@@ -97,7 +100,7 @@ public class AddDoubleProjectTest {
     @Step("Клик по кнопкой 'Add Project'.")
     private void clickToButtAddProject() {
         menu = projectPage.addProjectButtonClick();
-        screenshot();
+        screenshot("Меню добавления  проекта");
     }
 
     @Step("Ввод данных")
@@ -105,7 +108,7 @@ public class AddDoubleProjectTest {
         enterProjectName(projectName);
         choiseClient(client);
         choiseColor(color);
-        screenshot();
+        screenshot("Заполненое меню добавление проекта");
     }
     
     @Step("Ввод названия проекта.")
@@ -138,7 +141,7 @@ public class AddDoubleProjectTest {
         not_checkField("project name",2,projectName, secondRow.getProjectName());
         checkField("кол-ва проектов",n, projectPage.getAllProject_count());
 
-        screenshot();
+        screenshot("Конец");
     }
 
     @Step("Проверка {field}.")
@@ -155,8 +158,8 @@ public class AddDoubleProjectTest {
         assertNotSame(expected, actual);
     }
 
-    @Attachment(value = "Вложение",type = "image/png", fileExtension = ".png")
-    public static byte[] screenshot() {
+    @Attachment(value = "{name}",type = "image/png", fileExtension = ".png")
+    public static byte[] screenshot(String name) {
         return ((TakesScreenshot)mainPage.getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.BYTES);
     }
 }

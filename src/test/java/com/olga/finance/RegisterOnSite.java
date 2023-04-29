@@ -17,12 +17,11 @@ public class RegisterOnSite {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--headless");
-        options.addArguments("start-maximized");
+        options.addArguments("--window-size=950,900");
 
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.get("https://olga-finance.effective.band/");
-        driver.manage().window().maximize();
         LoginPage page_1 = new LoginPage(driver);
 
         page_1.writeEmail(email);

@@ -9,6 +9,7 @@ import io.qameta.allure.junit4.DisplayName;
 import io.qameta.allure.model.Status;
 import org.junit.*;
 import org.openqa.selenium.NoSuchContextException;
+import org.openqa.selenium.TakesScreenshot;
 
 import static io.qameta.allure.Allure.parameter;
 import static io.qameta.allure.Allure.step;
@@ -54,6 +55,10 @@ public class ChangeTeamTest {
     @Owner(value = "Плескунов Дмитрий")
     @Test
     public void ChangeHumanTest() {
+        parameter("Field name", EXPERTIZE_FIELD_NAME);
+        parameter("Value", EXPERTIZE_FIELD_VALUE);
+
+        screenshot("Начало");
         clickFirstHuman();
 
         clickChangeButton();
@@ -61,7 +66,8 @@ public class ChangeTeamTest {
         changeExpertiseField(EXPERTIZE_FIELD_VALUE);
 
         saveChanged();
-
+        screenshot("Конец");
+        
         checkChange(EXPERTIZE_FIELD_VALUE);
     }
 
@@ -80,16 +86,19 @@ public class ChangeTeamTest {
     private static void clickFirstHuman(){
         expertizeFieldValueOld = teamPage.getColumns(EXPERTIZE_FIELD_NAME).get(0);
         menu = teamPage.clickHuman(0);
+        screenshot("Информация первой записи");
     }
 
     @Step("Нажатие кнопки редактирования.")
     private static void clickChangeButton(){
         menu.clickEdit();
+        screenshot("Меню редактирования первой записи");
     }
 
-    @Step("Изменение поля Expertise на значение \"QA\"")
+    @Step("Изменение поля Expertise на значение {value}")
     private static void changeExpertiseField(String value){
         menu.selectExpertise(value);
+        screenshot("Изменение поля Expertise на значение "+value);
     }
 
     @Step("Сохранение изменений")
@@ -114,5 +123,10 @@ public class ChangeTeamTest {
         menu.clickEdit();
         menu.selectExpertise(expertizeFieldValueOld);
         teamPage = menu.clickSave();
+    }
+
+    @Attachment(value = "{name}",type = "image/png", fileExtension = ".png")
+    public static byte[] screenshot(String name) {
+        return ((TakesScreenshot)mainPage.getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.BYTES);
     }
 }

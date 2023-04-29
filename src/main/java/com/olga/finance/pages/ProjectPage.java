@@ -18,8 +18,8 @@ public class ProjectPage {
         this.driver=driver;
     }
     private By tableRows = By.xpath("//table/tbody/tr");
-
     private By addProjectButton = By.xpath("/html/body/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/button");
+    private By hideLeftPannelButton = By.xpath("//button[contains(@class, 'LoggedLayout_openButton__lojt7')]");
 
     private By countLabel = By.className("MuiTablePagination-displayedRows");
     public List<Project> getProjects(){
@@ -50,5 +50,9 @@ public class ProjectPage {
         String[] temp1 = temp.split(" of ");
         int result = Integer.parseInt(temp1[1]);
         return result;
+    }
+
+    public void hideLeftPannel(){
+        driver.findElement(hideLeftPannelButton).click();
     }
 }
