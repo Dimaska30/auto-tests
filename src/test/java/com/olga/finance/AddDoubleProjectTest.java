@@ -33,7 +33,7 @@ public class AddDoubleProjectTest {
     static private ProjectPage projectPage;
     static private AddProjectMenu menu;
 
-   static private String ADMIN_LOGIN = "admin@gmail.com";
+    static private String ADMIN_LOGIN = "admin@gmail.com";
     static private String ADMIN_PASSWORD = "olga_finance";
 
     static private String PROJECT_NAME = "";
@@ -52,18 +52,17 @@ public class AddDoubleProjectTest {
     @Step("Переключение на страницу 'Projects'.")
     public void before() {
         projectPage = mainPage.clickProject();
-        if (projectPage.getProjects().size() == 0){
-            step("Проверили, что таблица Projects не пустая.",  Status.FAILED);
+        if (projectPage.getProjects().size() == 0) {
+            step("Проверили, что таблица Projects не пустая.", Status.FAILED);
             throw new NoSuchContextException("В таблице нет проектов!");
         }
         step("Проверили, что таблица Projects не пустая.");
         projectPage.hideLeftPannel();
     }
 
-    
     @DisplayName("Дублирование проекта в систему")
     @Description("Проверка на не создание дублей проектов в системе.")
-    @Link(name="Ссылка на странницу", url="https://olga-finance.effective.band/projects")
+    @Link(name = "Ссылка на странницу", url = "https://olga-finance.effective.band/projects")
     @Owner(value = "Красотина Арина")
     @Test
     public void addProjectTest() {
@@ -104,13 +103,13 @@ public class AddDoubleProjectTest {
     }
 
     @Step("Ввод данных")
-    private void enterData(String projectName,  String client, String color) {
+    private void enterData(String projectName, String client, String color) {
         enterProjectName(projectName);
         choiseClient(client);
         choiseColor(color);
         screenshot("Заполненое меню добавление проекта");
     }
-    
+
     @Step("Ввод названия проекта.")
     private void enterProjectName(String projectName) {
         menu.enterProjectName(projectName);
@@ -137,29 +136,30 @@ public class AddDoubleProjectTest {
         Project firstRow = projectPage.getProjects().get(0);
         Project secondRow = projectPage.getProjects().get(1);
 
-        checkField("project name",1,projectName, firstRow.getProjectName());
-        not_checkField("project name",2,projectName, secondRow.getProjectName());
-        checkField("кол-ва проектов",n, projectPage.getAllProject_count());
+        checkField("project name", 1, projectName, firstRow.getProjectName());
+        not_checkField("project name", 2, projectName, secondRow.getProjectName());
+        checkField("кол-ва проектов", n, projectPage.getAllProject_count());
 
         screenshot("Конец");
     }
 
     @Step("Проверка {field}.")
-    private void checkField(String field, int expected, int  actual) {
+    private void checkField(String field, int expected, int actual) {
         assertEquals(expected, actual);
     }
+
     @Step("Проверка поля {field} в строке {n} на соотвествие.")
-    private void checkField(String field,int n, String expected, String  actual) {
+    private void checkField(String field, int n, String expected, String actual) {
         assertEquals(expected, actual);
     }
 
     @Step("Проверка поля {field} в строке {n} на несоответсвие.")
-    private void not_checkField(String field,int n, String expected, String  actual) {
+    private void not_checkField(String field, int n, String expected, String actual) {
         assertNotSame(expected, actual);
     }
 
-    @Attachment(value = "{name}",type = "image/png", fileExtension = ".png")
+    @Attachment(value = "{name}", type = "image/png", fileExtension = ".png")
     public static byte[] screenshot(String name) {
-        return ((TakesScreenshot)mainPage.getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.BYTES);
+        return ((TakesScreenshot) mainPage.getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.BYTES);
     }
 }

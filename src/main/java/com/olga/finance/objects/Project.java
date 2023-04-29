@@ -43,8 +43,8 @@ public class Project {
     }
 
     public String getcolumn(int i) throws IllegalArgumentException {
-        if(i >= 1 && i <8){
-            return element.findElement(By.xpath(".//td["+i+"]")).getText();
+        if (i >= 1 && i < 8) {
+            return element.findElement(By.xpath(".//td[" + i + "]")).getText();
         } else {
             throw new IllegalArgumentException("Wrong column number");
         }

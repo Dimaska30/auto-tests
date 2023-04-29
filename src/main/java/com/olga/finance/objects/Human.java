@@ -1,6 +1,5 @@
 package com.olga.finance.objects;
 
-import com.olga.finance.menus.ClientInfoMenu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -28,22 +27,22 @@ public class Human {
     }
 
     public String getExperience() {
-        return  element.findElement(By.xpath(".//td[6]")).getText();
+        return element.findElement(By.xpath(".//td[6]")).getText();
     }
 
     public String getDefaultRate() {
         return element.findElement(By.xpath(".//td[6]")).getText();
     }
 
-    public void  click(){
+    public void click() {
         element.click();
     }
 
-    public String getColumn(int i) throws IllegalArgumentException{
-        if(i > 0 && i <8){
-            return element.findElement(By.xpath(".//td["+(i+1)+"]")).getText();
+    public String getColumn(int i) throws IllegalArgumentException {
+        if (i > 0 && i < 8) {
+            return element.findElement(By.xpath(".//td[" + (i + 1) + "]")).getText();
         } else {
             throw new IllegalArgumentException("Wrong column number");
         }
     }
-} 
+}

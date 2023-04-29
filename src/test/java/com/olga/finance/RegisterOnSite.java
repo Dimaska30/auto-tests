@@ -5,13 +5,11 @@ import com.olga.finance.pages.MainPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import com.olga.finance.pages.LoginPage;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class RegisterOnSite {
-    static MainPage registrationOnSite(String email, String password){
+    static MainPage registrationOnSite(String email, String password) {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--no-sandbox");

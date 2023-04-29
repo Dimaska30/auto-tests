@@ -22,6 +22,7 @@ public class TeamPage {
     private By nextButton = By.xpath("//button[@title=\"Перейти на следующую страницу\"]");
     private By prevButton = By.xpath("//button[@title=\"Перейти на предыдущую страницу\"]");
     private By hideLeftPannelButton = By.xpath("//button[contains(@class, 'LoggedLayout_openButton__lojt7')]");
+
     public boolean clickFilter(String name) {
         List<WebElement> columns_name = driver.findElements(filters);
         for (int i = 0; i < columns_name.size(); i++) {
@@ -42,7 +43,7 @@ public class TeamPage {
         return people;
     }
 
-    public ClientInfoMenu clickHuman(int n){
+    public ClientInfoMenu clickHuman(int n) {
         getHumans().get(n).click();
         return new ClientInfoMenu(driver);
     }
@@ -51,7 +52,6 @@ public class TeamPage {
         List<WebElement> elements = driver.findElements(filters);
         int index = -1;
         for (int i = 0; i < elements.size(); i++) {
-            String temp = elements.get(i).getText();
             if (elements.get(i).getText().equals(name)) {
                 index = i;
                 break;
@@ -72,7 +72,7 @@ public class TeamPage {
 
     public void toFirstPage() {
         WebElement button = driver.findElement(prevButton);
-        while(button.isEnabled()){
+        while (button.isEnabled()) {
             button.click();
             button = driver.findElement(prevButton);
         }
@@ -80,17 +80,16 @@ public class TeamPage {
 
     public List<String> getWholeColumn(String name) {
         List<String> result = getColumns(name);
-        while(nextPage()){
+        while (nextPage()) {
             result.addAll(getColumns(name));
         }
         toFirstPage();
-        return  result;
+        return result;
     }
 
-    public void hideLeftPannel(){
+    public void hideLeftPannel() {
         driver.findElement(hideLeftPannelButton).click();
     }
-    
 
     private List<String> getcolumns(int i) {
         List<String> column = new ArrayList<>();

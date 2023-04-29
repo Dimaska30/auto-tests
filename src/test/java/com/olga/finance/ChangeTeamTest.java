@@ -26,13 +26,14 @@ public class ChangeTeamTest {
 
     static private String EXPERTIZE_FIELD_NAME = "Expertize";
 
-    static private String expertizeFieldValueOld ="";
+    static private String expertizeFieldValueOld = "";
 
     static private MainPage mainPage;
 
     static private TeamPage teamPage;
 
     static private ClientInfoMenu menu;
+
     @BeforeClass
     @Step("Авторизация на сайте.")
     public static void beforeClass() {
@@ -43,15 +44,16 @@ public class ChangeTeamTest {
     @Step("Переключение на страницу 'Team'.")
     public void before() {
         teamPage = mainPage.clickTeam();
-        if (teamPage.getHumans().size() == 0){
-            step("Проверили, что таблица Team не пустая.",  Status.FAILED);
+        if (teamPage.getHumans().size() == 0) {
+            step("Проверили, что таблица Team не пустая.", Status.FAILED);
             throw new NoSuchContextException("В таблице нет проектов!");
         }
         step("Проверили, что таблица Team не пустая.");
     }
+
     @DisplayName("Изменения существующего клиента")
     @Description("Проверка изменения существующего Клиента.")
-    @Link(name="Ссылка на странницу", url="https://olga-finance.effective.band/team")
+    @Link(name = "Ссылка на странницу", url = "https://olga-finance.effective.band/team")
     @Owner(value = "Плескунов Дмитрий")
     @Test
     public void ChangeHumanTest() {
@@ -67,7 +69,7 @@ public class ChangeTeamTest {
 
         saveChanged();
         screenshot("Конец");
-        
+
         checkChange(EXPERTIZE_FIELD_VALUE);
     }
 
@@ -83,31 +85,31 @@ public class ChangeTeamTest {
     }
 
     @Step("Нажатие на первую запись.")
-    private static void clickFirstHuman(){
+    private static void clickFirstHuman() {
         expertizeFieldValueOld = teamPage.getColumns(EXPERTIZE_FIELD_NAME).get(0);
         menu = teamPage.clickHuman(0);
         screenshot("Информация первой записи");
     }
 
     @Step("Нажатие кнопки редактирования.")
-    private static void clickChangeButton(){
+    private static void clickChangeButton() {
         menu.clickEdit();
         screenshot("Меню редактирования первой записи");
     }
 
     @Step("Изменение поля Expertise на значение {value}")
-    private static void changeExpertiseField(String value){
+    private static void changeExpertiseField(String value) {
         menu.selectExpertise(value);
-        screenshot("Изменение поля Expertise на значение "+value);
+        screenshot("Изменение поля Expertise на значение " + value);
     }
 
     @Step("Сохранение изменений")
-    private static void saveChanged(){
+    private static void saveChanged() {
         teamPage = menu.clickSave();
     }
 
     @Step("Проверка, что данные изменены.")
-    private static void checkChange(String expertise){
+    private static void checkChange(String expertise) {
         Human any_man = teamPage.getHumans().get(0);
         checkField("Expertise", expertise, any_man.getExperience());
     }
@@ -118,15 +120,15 @@ public class ChangeTeamTest {
     }
 
     @Step("Возвращаем изменения.")
-    private static void rechange(){
+    private static void rechange() {
         menu = teamPage.clickHuman(0);
         menu.clickEdit();
         menu.selectExpertise(expertizeFieldValueOld);
         teamPage = menu.clickSave();
     }
 
-    @Attachment(value = "{name}",type = "image/png", fileExtension = ".png")
+    @Attachment(value = "{name}", type = "image/png", fileExtension = ".png")
     public static byte[] screenshot(String name) {
-        return ((TakesScreenshot)mainPage.getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.BYTES);
+        return ((TakesScreenshot) mainPage.getDriver()).getScreenshotAs(org.openqa.selenium.OutputType.BYTES);
     }
 }
