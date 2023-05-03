@@ -16,7 +16,7 @@ import java.util.List;
 import static io.qameta.allure.Allure.step;
 import static io.qameta.allure.Allure.parameter;
 
-@Epic("Страница 'Projects'")
+@Epic("Страница 'Team'")
 @Feature("Проверка работоспособности фильтра")
 
 public class TeamFilterTest {
@@ -38,15 +38,15 @@ public class TeamFilterTest {
     }
 
     @Before
-    @Step("Переключение на страницу 'Team'.")
     public void before() {
         teamPage = mainPage.clickTeam();
         teamPage.hideLeftPannel();
+        step("Переключение на страницу 'Team'.");
         if (teamPage.getHumans().size() == 0) {
             step("Проверили, что таблица Team не пустая.", Status.FAILED);
             throw new NoSuchContextException("В таблице нет проектов!");
         }
-        if (checkColumnBySort(DEFAULT_RATE_FIELD_NAME)) {
+        if (checkColumnBySort(DEFAULT_RATE_FIELD_NAME, true)) {
             sortedColumn(EXPERTIZE_FIELD_NAME);
         }
         step("Проверили, что таблица Team не пустая.");
@@ -58,12 +58,13 @@ public class TeamFilterTest {
     @Owner(value = "Плескунов Дмитрий")
     @Test
     public void RateFilterTest() {
+        parameter("Login", ADMIN_LOGIN);
+        parameter("Password", ADMIN_PASSWORD);
         parameter("Column", DEFAULT_RATE_FIELD_NAME);
 
-        screenshot("Начало");
         sortedColumn(DEFAULT_RATE_FIELD_NAME);
-        screenshot("Конец");
-        junit.framework.Assert.assertTrue(checkColumnBySort(DEFAULT_RATE_FIELD_NAME));
+        screenshot("Результат");
+        junit.framework.Assert.assertTrue(checkColumnBySort(DEFAULT_RATE_FIELD_NAME, false));
     }
 
     @After
@@ -76,13 +77,12 @@ public class TeamFilterTest {
     public static void afterClass() {
     }
 
-    @Step("Сортируем столбец {n}.")
     public static void sortedColumn(String n) {
         teamPage.clickFilter(n);
+        step("Сортируем столбец "+n);
     }
 
-    @Step("Проверка отсортированности столбца {n}.")
-    public static boolean checkColumnBySort(String n) {
+    public static boolean checkColumnBySort(String n, boolean isReverse) {
         List<String> column = teamPage.getWholeColumn(n);
         List<Integer> column_num = new ArrayList<>();
         column.forEach(x -> column_num.add(Integer.parseInt(x)));
@@ -98,10 +98,15 @@ public class TeamFilterTest {
             }
             previous = current;
         }
+
+        if(isReverse)
+            step("Cтолбeц " + n + " неотсортирован", result? Status.FAILED : Status.PASSED);
+        else 
+            step("Cтолбeц " + n + " отсортирован", result? Status.PASSED  : Status.FAILED);
+        
         return result;
     }
 
-    @Step("Проверка двух чисел {a} и {b} на неубывание.")
     private static boolean checkTwoNum(int a, int b) {
         return a <= b;
     }

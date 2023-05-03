@@ -49,9 +49,9 @@ public class AddDoubleProjectTest {
     }
 
     @Before
-    @Step("Переключение на страницу 'Projects'.")
     public void before() {
         projectPage = mainPage.clickProject();
+        step("Переключились на страницу 'Projects'.");
         if (projectPage.getProjects().size() == 0) {
             step("Проверили, что таблица Projects не пустая.", Status.FAILED);
             throw new NoSuchContextException("В таблице нет проектов!");
@@ -78,6 +78,8 @@ public class AddDoubleProjectTest {
         saveProject();
 
         checkProject(PROJECT_NAME, COUNT_PROJECT);
+
+        screenshot("Результат");
     }
 
     @After
@@ -99,7 +101,6 @@ public class AddDoubleProjectTest {
     @Step("Клик по кнопкой 'Add Project'.")
     private void clickToButtAddProject() {
         menu = projectPage.addProjectButtonClick();
-        screenshot("Меню добавления  проекта");
     }
 
     @Step("Ввод данных")
@@ -107,20 +108,16 @@ public class AddDoubleProjectTest {
         enterProjectName(projectName);
         choiseClient(client);
         choiseColor(color);
-        screenshot("Заполненое меню добавление проекта");
     }
 
-    @Step("Ввод названия проекта.")
     private void enterProjectName(String projectName) {
         menu.enterProjectName(projectName);
     }
 
-    @Step("Выбор заказчика.")
     private void choiseClient(String client) {
         menu.enterClient(client);
     }
 
-    @Step("Выбор цвета.")
     private void choiseColor(String color) {
         menu.enterColor(color);
     }
@@ -130,7 +127,6 @@ public class AddDoubleProjectTest {
         projectPage = menu.clickSave();
     }
 
-    @Step("Проверка, что проект единственный.")
     private void checkProject(String projectName, int n) {
 
         Project firstRow = projectPage.getProjects().get(0);
@@ -139,21 +135,17 @@ public class AddDoubleProjectTest {
         checkField("project name", 1, projectName, firstRow.getProjectName());
         not_checkField("project name", 2, projectName, secondRow.getProjectName());
         checkField("кол-ва проектов", n, projectPage.getAllProject_count());
-
-        screenshot("Конец");
+        step("Проверка, что проект единственный.");
     }
 
-    @Step("Проверка {field}.")
     private void checkField(String field, int expected, int actual) {
         assertEquals(expected, actual);
     }
 
-    @Step("Проверка поля {field} в строке {n} на соотвествие.")
     private void checkField(String field, int n, String expected, String actual) {
         assertEquals(expected, actual);
     }
 
-    @Step("Проверка поля {field} в строке {n} на несоответсвие.")
     private void not_checkField(String field, int n, String expected, String actual) {
         assertNotSame(expected, actual);
     }

@@ -15,8 +15,8 @@ import static io.qameta.allure.Allure.parameter;
 import static io.qameta.allure.Allure.step;
 import static org.junit.Assert.assertEquals;
 
-@Epic("Страница 'Projects'")
-@Feature("Проверка дублирования проекта")
+@Epic("Страница 'Team'")
+@Feature("Проверка изменения записи")
 
 public class ChangeTeamTest {
     static private String ADMIN_LOGIN = "admin@gmail.com";
@@ -41,9 +41,9 @@ public class ChangeTeamTest {
     }
 
     @Before
-    @Step("Переключение на страницу 'Team'.")
     public void before() {
         teamPage = mainPage.clickTeam();
+        step("Переключение на страницу 'Team'.");
         if (teamPage.getHumans().size() == 0) {
             step("Проверили, что таблица Team не пустая.", Status.FAILED);
             throw new NoSuchContextException("В таблице нет проектов!");
@@ -57,10 +57,11 @@ public class ChangeTeamTest {
     @Owner(value = "Плескунов Дмитрий")
     @Test
     public void ChangeHumanTest() {
+        parameter("Login", ADMIN_LOGIN);
+        parameter("Password", ADMIN_PASSWORD);
         parameter("Field name", EXPERTIZE_FIELD_NAME);
         parameter("Value", EXPERTIZE_FIELD_VALUE);
 
-        screenshot("Начало");
         clickFirstHuman();
 
         clickChangeButton();
@@ -68,16 +69,17 @@ public class ChangeTeamTest {
         changeExpertiseField(EXPERTIZE_FIELD_VALUE);
 
         saveChanged();
-        screenshot("Конец");
+        screenshot("Результат");
 
-        checkChange(EXPERTIZE_FIELD_VALUE);
+        String actual = teamPage.getHumans().get(0).getExperience();
+        checkChange(EXPERTIZE_FIELD_VALUE, actual);
     }
 
     @After
-    @Step("Выход из системы.")
     public void after() {
         rechange();
         mainPage.getDriver().quit();
+        step("Выход из системы.");
     }
 
     @AfterClass
@@ -88,19 +90,17 @@ public class ChangeTeamTest {
     private static void clickFirstHuman() {
         expertizeFieldValueOld = teamPage.getColumns(EXPERTIZE_FIELD_NAME).get(0);
         menu = teamPage.clickHuman(0);
-        screenshot("Информация первой записи");
     }
 
     @Step("Нажатие кнопки редактирования.")
     private static void clickChangeButton() {
         menu.clickEdit();
-        screenshot("Меню редактирования первой записи");
     }
 
-    @Step("Изменение поля Expertise на значение {value}")
+    
     private static void changeExpertiseField(String value) {
         menu.selectExpertise(value);
-        screenshot("Изменение поля Expertise на значение " + value);
+        step("Изменение поля Expertise на значение "+value);
     }
 
     @Step("Сохранение изменений")
@@ -109,12 +109,10 @@ public class ChangeTeamTest {
     }
 
     @Step("Проверка, что данные изменены.")
-    private static void checkChange(String expertise) {
-        Human any_man = teamPage.getHumans().get(0);
-        checkField("Expertise", expertise, any_man.getExperience());
+    private static void checkChange(String expected, String actual) {
+        checkField("Expertise", expected, actual);
     }
 
-    @Step("Проверка поля {field}.")
     private static void checkField(String field, String expected, String actual) {
         assertEquals(expected, actual);
     }
