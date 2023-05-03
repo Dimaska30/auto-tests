@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Wed May 03 14:50:05 GMT 2023","Wed May 03 14:50:10 GMT 2023","4925","","com.olga.finance.AddDoubleProjectTest","","com.olga.finance.AddDoubleProjectTest","addProjectTest","Дублирование проекта в систему","Проверка на не создание дублей проектов в системе."
+"passed","Wed May 03 14:50:13 GMT 2023","Wed May 03 14:50:17 GMT 2023","3719","","com.olga.finance.TeamFilterTest","","com.olga.finance.TeamFilterTest","RateFilterTest","Тестирование фильтра Default Rate","Проверка фильтра Default Rate."
+"passed","Wed May 03 14:50:20 GMT 2023","Wed May 03 14:50:24 GMT 2023","3633","","com.olga.finance.ChangeTeamTest","","com.olga.finance.ChangeTeamTest","ChangeHumanTest","Изменения существующего клиента","Проверка изменения существующего Клиента."
